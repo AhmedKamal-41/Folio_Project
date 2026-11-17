@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { setTimeout as wait } from "node:timers/promises";
 import { createSaveManager } from "../../static/js/autosave.js";
 
 function setup(write) {
@@ -16,6 +17,21 @@ function setup(write) {
   });
   return { manager, statuses, errors, change: (title) => { draft.title = title; manager.changed(); } };
 }
+
+test("pausing a draft prevents a scheduled save without discarding its contents", async () => {
+  let writes = 0;
+  const manager = createSaveManager({
+    readSnapshot: () => ({ title: "Keep this draft" }),
+    writeSnapshot: async () => { writes += 1; return { version: 2 }; },
+    onSaved: () => {}, onStatus: () => {}, onError: () => {}, delay: 5
+  });
+  manager.changed();
+  manager.pause();
+  await wait(20);
+  assert.equal(writes, 0);
+  assert.equal(manager.dirty, true);
+  manager.reset();
+});
 
 test("flush saves a valid changed document and clears unsaved state", async () => {
   const writes = [];

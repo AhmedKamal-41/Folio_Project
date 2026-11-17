@@ -73,6 +73,7 @@ export function createSaveManager({ readSnapshot, writeSnapshot, onSaved, onStat
 
   return {
     changed, save, flush, reset,
+    pause: () => clearTimeout(timer),
     waitForPending: () => pending || Promise.resolve(true),
     get dirty() { return isDirty(); },
     get saving() { return Boolean(pending); },

@@ -85,6 +85,12 @@ export function createDocumentController(editor, saves) {
     if (!target) return;
     if (!confirm(`Delete "${target.title}"? This cannot be undone.`)) return;
     return navigate(async () => {
+      if (state.current?.id === id) {
+        await saves.waitForPending();
+        saves.pause();
+      } else if (!await saves.flush()) {
+        return;
+      }
       await api(`/documents/${id}`, { method: "DELETE" });
       state.documents = state.documents.filter((document) => document.id !== id);
       if (state.current?.id === id) setDocument(null);
