@@ -1,8 +1,0 @@
-Team planning notes
-
-Goal: Make shared work easier to find and update.
-
-This week:
-1. Review the first product slice.
-2. Share this document with Sara.
-3. Agree on the next milestone.
