@@ -1,43 +1,53 @@
 # AI workflow note
 
-Tool used: ChatGPT / Codex for implementation, review, documentation, and tests.
-The assistant reviewed my Python solutions to use clear names, explicit control
-flow, and focused functions as a reference for the coding style.
+Tool used: ChatGPT / Codex for implementation, review, tests, documentation,
+and deployment assistance. AI also operated a real Chrome browser to verify
+the deployed application.
 
 ## Human direction
 
-I asked for the code to be separated into professional, understandable files
-while keeping a straightforward coding style. The refactor follows that
-instruction: routes, services, schemas, persistence, and browser features have
-separate responsibilities. I will review and run the final code before submission.
+I chose a focused document editor and asked for clear names, explicit control
+flow, small functions, and separate files. I rejected keeping the entire app
+in one main file. The resulting structure separates routes, services,
+validation, persistence, and browser features while staying straightforward.
 
-## Where AI helped
+The updated project adds Word import/export and owner-only deletion. I asked
+the assistant to deploy the latest GitHub version and complete the remaining
+written handoff. I still need to review the final changes and record my own
+walkthrough before submitting.
 
-AI translated the requirements into a bounded create/edit/import/share flow,
-implemented the API and browser code, separated the original larger files,
-and generated tests and written setup/architecture notes.
+## Where AI materially helped
+
+- Converted the requirements into a bounded create/edit/import/share workflow.
+- Implemented and organized backend and browser modules.
+- Generated regression tests for access rules, persistence, and save races.
+- Reviewed the changed repository, corrected deployment configuration, and
+  deployed its Docker image with persistent storage on Railway.
+- Drafted setup, architecture, validation, and submission documents.
 
 ## Output changed or rejected
 
-- Replaced the all-in-one backend with a small application entry point and
-  feature modules. Split frontend API, autosave, documents, sharing, and rendering.
-- Fixed a document-list bug where a variable named `document` shadowed the
-  browser DOM object. A rendering regression test now covers populated lists.
-- Added an application factory for isolated test databases and ensured a
-  successful response is sent after transaction commit.
-- Kept version-checked saves and added tests for simultaneous writes and typing
-  during a pending save. Added a plain-text draft download for conflict recovery.
-- Chose Quill/Delta instead of hand-written rich-text commands/raw HTML storage.
-- Kept real auth, live merging, comments, and DOCX support outside the timebox.
+- Replaced the original large backend with a small entry point and feature
+  modules; separated frontend API, autosave, documents, sharing, and rendering.
+- Used Quill Delta storage and server validation instead of accepting raw HTML.
+- Added version checks and serialized saves to avoid silently overwriting
+  newer edits. A Word download preserves a draft before conflict recovery.
+- Corrected Railway configuration to use the supported Dockerfile path field.
+- Fixed a deletion/autosave race by waiting for in-flight writes and pausing
+  the queued write before removing the open document; added a regression test.
+- Kept real login, live merging, comments, and history outside this scope.
 
-## Verification and remaining work
+## Verification and limits
 
-Backend tests exercise the actual HTTP application with temporary databases.
-Frontend tests exercise save races and DOM rendering using LinkeDOM. They are
-not a substitute for browser verification of the Quill toolbar and layout.
-See `VALIDATION.md` for exact counts and what was actually run.
+All 14 backend and 15 frontend tests passed. Backend tests use actual HTTP
+requests against isolated temporary databases. Frontend tests exercise DOM
+rendering and asynchronous saves. Railway built the image and passed the
+health check. A live Chrome pass verified formatting, saving/reopening,
+sharing, teammate edits, Word import, and Word download. The downloaded file
+was parsed separately to confirm its heading, bold text, and list paragraph.
+Documents and sharing also survived a successful Railway redeploy.
 
-A local Chromium launch was unavailable earlier. Live deployment, real-browser
-checks, recording, and the Google Drive submission are still pending. I will
-only claim these after completing them and will explain the changes I personally
-reviewed in my walkthrough.
+`VALIDATION.md` distinguishes completed checks from remaining coverage.
+AI assistance does not substitute for my understanding: the recording should
+explain the decisions and changes I have personally reviewed. The video and
+Google Drive submission are still pending; no fabricated links are included.

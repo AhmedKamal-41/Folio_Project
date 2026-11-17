@@ -29,11 +29,11 @@ clear names, explicit conditions, normal SQL, and focused functions.
 | `app/dependencies.py` | Supplies the request's connection and selected demo user. |
 | `app/schemas.py` | Validates titles, rich-text operations, versions, and share requests; defines API responses. |
 | `app/middleware.py` | Limits request sizes and adds security/cache headers. |
-| `app/routes/documents.py` | Receives list/create/import/get/update requests and calls document services. |
+| `app/routes/documents.py` | Receives list/create/import/get/update/delete requests and calls document services. |
 | `app/routes/sharing.py` | Receives grant/list/revoke sharing requests. |
 | `app/routes/users.py` | Lists the three demo users. |
 | `app/routes/health.py` | Checks database availability for hosting readiness. |
-| `app/services/documents.py` | Reads/writes documents, checks access, and detects stale saves. |
+| `app/services/documents.py` | Reads/writes documents, checks access, detects stale saves, and enforces owner-only deletion. |
 | `app/services/sharing.py` | Enforces owner-only sharing and grants or revokes editor access. |
 | `app/services/imports.py` | Validates UTF-8 text and Word (.docx) files and turns them into a document payload. |
 
@@ -52,9 +52,9 @@ Package `__init__.py` files mark Python packages; they contain no feature logic.
 | `static/js/editor.js` | Initializes Quill, updates word counts, and downloads drafts as Word (.docx) files. |
 | `static/js/view.js` | Renders the document list, ownership labels, account controls, and save status. |
 | `static/js/autosave.js` | Debounces and serializes saves, tracks newer edits, and stops on conflicts. |
-| `static/js/documents.js` | Handles create/open/import/refresh/account switching and draft-safe navigation. |
+| `static/js/documents.js` | Handles create/open/import/delete/refresh/account switching and draft-safe navigation. |
 | `static/js/sharing.js` | Renders sharing controls and grants or revokes access. |
-| `static/vendor/` | Contains the pinned third-party editor distribution and its license. |
+| `static/vendor/` | Contains pinned Quill and Word-export distributions and their licenses. |
 
 ## Trace one save
 
@@ -79,6 +79,7 @@ browser then updates its saved version and status.
 | `DEPLOYMENT.md` | Explains deployment and post-deployment verification. |
 | `ARCHITECTURE.md`, `AI_WORKFLOW.md`, `VALIDATION.md` | Explain design, AI usage, and verification evidence. |
 | `WALKTHROUGH.md`, `SUBMISSION.md`, URL files | Prepare the assessment submission. |
+| `NEXT_STEPS.md` | Lists the remaining recording, Drive upload, and form submission steps. |
 
 The generated SQLite database is `data/folio.db` locally or `/data/folio.db`
 in Docker/Railway. It is not committed to source or included in the ZIP.

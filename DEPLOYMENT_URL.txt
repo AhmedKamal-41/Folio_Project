@@ -1,1 +1,1 @@
-PENDING: Deploy the app with a persistent /data volume, verify it, and replace this line with the live URL.
+https://folio-production-3075c6e5.up.railway.app/

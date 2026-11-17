@@ -1,61 +1,97 @@
 # Folio — Ahmed Ali
 
-Status: modular source implementation and automated verification complete.
-Real-browser verification, live deployment, walkthrough, and Drive submission
-are pending and must be completed before presenting this as a finished submission.
+Folio is a lightweight document workspace built with FastAPI, SQLite,
+vanilla JavaScript modules, and Quill. The application is deployed and its
+core browser workflows have been verified. The recording and Drive folder
+still need their actual links before submitting this assessment.
 
 ## Review links
 
-- Google Drive folder: PENDING
-- Live application: PENDING
-- Walkthrough video: PENDING
+- Google Drive folder: **PENDING — upload the materials and paste the folder URL.**
+- Live application: https://folio-production-3075c6e5.up.railway.app/
+- Source code: https://github.com/AhmedKamal-41/Folio_Project
+- Walkthrough video: **PENDING — record 3–5 minutes and paste the video URL.**
 
 ## Included
 
-- FastAPI backend separated into application setup, routes, services, schemas,
-  dependencies, middleware, configuration, and SQLite persistence.
-- Browser modules for API calls, rich-text editing, documents, sharing, autosave,
-  and UI rendering.
 - Create, rename, rich-text editing, autosave/manual save, and reopening.
-- UTF-8 `.txt` import with documented limits and error handling.
-- Owner-controlled editor access, owned/shared indicators, and revocation.
-- Version-checked saves and plain-text draft download for conflict recovery.
-- 12 backend and 13 frontend tests; GitHub Actions workflow included.
-- README, file guide, architecture note, AI workflow note, validation note,
-  deployment guide, Dockerfile, Compose file, Railway configuration, and video outline.
-- Pinned Quill assets and BSD license; sample import file.
+- Bold, italic, underline, headings, and bulleted/numbered lists.
+- UTF-8 `.txt` and Word `.docx` import, with visible 1 MB limits and validation.
+- Word `.docx` draft download that preserves supported formatting.
+- Owner-controlled editor sharing, owned/shared indicators, and revocation.
+- Owner-only deletion and version-checked saves to prevent stale overwrites.
+- Modular backend: application setup, routes, services, schemas, dependencies,
+  middleware, configuration, and SQLite persistence.
+- Browser modules for API calls, editor, documents, sharing, autosave, and rendering.
+- 14 backend and 15 frontend automated tests; GitHub Actions workflow included.
+- README, file guide, architecture note, AI workflow note, validation report,
+  deployment guide, submission checklist, and recording outline.
+- Dockerfile, Compose file, Railway configuration, and the live URL text file.
+- Bundled Quill and Word-export assets, licenses, and a sample text import.
+- A live product screenshot at `docs/screenshots/live-folio.jpg`.
 
 ## Demo accounts
 
-Select Ahmed Ali, Sara Chen, or Omar Hassan. No passwords or payment required.
-Identity is simulated and can be changed by any reviewer. Follow the README
-steps to demonstrate ownership, sharing, teammate edits, and revocation.
+Use the account selector: **Ahmed Ali** (ID 1), **Sara Chen** (ID 2), or
+**Omar Hassan** (ID 3). No passwords, registration, or payment are required.
+Create a document as Ahmed, share it with Sara, then switch to Sara to edit it.
+Omar has no access unless the owner grants it.
+
+Identity is simulated through `X-User-Id`; anyone can switch accounts. The
+server applies document permissions to the selected identity. This is a demo
+login model, not production authentication.
 
 ## Run locally
 
-Python 3.12+. Create/activate a virtual environment, install `requirements.txt`,
-and run `python -m uvicorn main:app --reload`. Open http://127.0.0.1:8000.
-Node 22+ is only needed for optional frontend tests: `npm ci --ignore-scripts`
-and `npm test`. Backend tests: `python -m unittest discover -s tests -v`.
+Requires Python 3.12+. From the project directory:
+
+```bash
+python -m venv .venv
+```
+
+Activate using the Windows PowerShell or macOS/Linux command in `README.md`, then:
+
+```bash
+python -m pip install -r requirements.txt
+python -m uvicorn main:app --reload
+```
+
+Open http://127.0.0.1:8000. Backend tests:
+`python -m unittest discover -s tests -v`. Frontend tests require Node 22+:
+`npm ci --ignore-scripts`, then `npm test`. There is no Node runtime build.
+
+## Verification
+
+All 29 automated tests passed. Railway built the Docker image and completed
+its health check. Live Chrome checks covered formatting, saving/reopening,
+sharing, teammate edits, Word import, and formatted Word download. Documents
+and sharing survived a successful Railway redeploy. See `VALIDATION.md` for
+evidence and the limits of these checks.
 
 ## Incomplete and intentionally omitted
 
-The live URL, recording URL, reviewer Drive link, real-browser checks, Docker
-build, and deployed persistence checks are incomplete. URL files are placeholders.
-Real login, live merging, comments, history, advanced permissions, DOCX import,
-and rich-document export are outside this scope.
+The walkthrough video and reviewer-accessible Google Drive folder are not
+created yet. Replace both pending links and `VIDEO_URL.txt` before submission.
+Real login, live merging/cursors, comments, history, offline draft recovery,
+and advanced sharing roles are omitted. Every share grants editor access.
+Word import/export supports the editor's basic formatting; complex layouts,
+tables, and images are not preserved. SQLite runs on one service replica.
 
 ## Next 2–4 hours
 
-Complete browser/deployment verification, record the walkthrough, and assemble
-one Google Drive folder. Then improve draft recovery and conflict comparison.
+Add recoverable local drafts and a conflict comparison screen. Before using
+the product with private team data, add real authentication and consider a
+managed database for multiple application replicas.
 
 ## Final checklist
 
-- [ ] Review and run the generated code yourself.
-- [ ] Complete the browser and deployment checklist in DEPLOYMENT.md.
-- [ ] Update VALIDATION.md with the actual results.
-- [ ] Fill DEPLOYMENT_URL.txt and the live link above.
-- [ ] Record/upload the walkthrough and fill VIDEO_URL.txt.
-- [ ] Upload source and notes to one reviewer-accessible Google Drive folder.
-- [ ] Replace every PENDING link with its actual URL.
+- [x] Deploy the repository on Railway with a persistent volume.
+- [x] Fill `DEPLOYMENT_URL.txt` and the live link above.
+- [x] Run automated tests and verify core flows in a real browser.
+- [x] Verify documents and sharing survive a Railway redeploy.
+- [x] Update architecture, AI workflow, and validation notes.
+- [ ] Personally review the code and rehearse the main flow.
+- [ ] Record/upload the walkthrough and fill `VIDEO_URL.txt` and the video link above.
+- [ ] Upload the source and notes to one Google Drive folder with reviewer access.
+- [ ] Replace the pending Drive link above.
+- [ ] Paste the submission text and required video URL into the assessment form.

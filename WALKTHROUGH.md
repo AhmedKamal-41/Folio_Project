@@ -23,8 +23,9 @@ Explain that the owner manages sharing and can remove access.
 
 ## 2:10–2:40 — Import
 
-Import `samples/team-notes.txt`, show its title and editable content, and explain
-the `.txt`, encoding, and size constraints visible in the interface.
+Import `samples/team-notes.txt` or a small Word file. Show its editable content
+and **Download draft** Word export. Explain `.txt`/`.docx`, the 1 MB limit,
+and that complex Word layouts, tables, and images are not preserved.
 
 ## 2:40–3:20 — Engineering choices
 
@@ -37,7 +38,10 @@ save conflict if time allows; explain that concurrent edits are not live-merged.
 Show the backend and frontend tests. Briefly show the separated routes, services, and UI modules. Explain how AI helped implement and test the
 code, what you reviewed or changed yourself, and any remaining limitations.
 Be specific about what you actually checked; do not read unverified claims.
-Mention real auth, live collaboration, and DOCX support as deliberate scope cuts.
+Mention real auth, live collaboration, comments, and history as scope cuts.
+Show the live Railway URL and explain that the `/data` volume retains SQLite
+data. Mention the 29 passing automated tests and the verified live flows.
 
 Upload the recording to Loom, YouTube, Vimeo, or Google Drive with reviewer
 access enabled. Put its real URL in `VIDEO_URL.txt` and `SUBMISSION.md`.
+Paste the same URL into the assessment's required Video Submission Link field.

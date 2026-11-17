@@ -3,6 +3,9 @@
 A focused document workspace: create, format, rename, save, import, and share.
 Built with FastAPI, SQLite, vanilla JavaScript modules, and Quill 2.0.3.
 
+**Live demo:** [Open Folio](https://folio-production-3075c6e5.up.railway.app/).
+Choose a demo account in the top-left selector; no password is required.
+
 ## Run locally
 
 Requires Python 3.12+. The application does not need Node, API keys, or a paid
@@ -32,8 +35,8 @@ python -m uvicorn main:app --reload
 ```
 
 Open http://127.0.0.1:8000. The database and three demo accounts are created
-on startup. Editor assets are already included in the ZIP. When reconstructing
-from the combined code file, run `python download_vendor.py` first.
+on startup. Editor and Word-export assets are included in the repository.
+Run `python download_vendor.py` only if those bundled assets need restoring.
 
 ## Review the main flow
 
@@ -46,6 +49,8 @@ from the combined code file, run `python download_vendor.py` first.
 7. Switch to **Omar Hassan**: he has no access until the owner shares it.
 8. As Ahmed, remove Sara's access in the sharing window.
 9. Import `samples/team-notes.txt` and edit the imported document.
+10. Import a small Word `.docx` file, then use **Download draft** to export it.
+11. Create a throwaway document and use its delete control as the owner.
 
 Use **Refresh document list** to retrieve newly shared or renamed documents.
 
@@ -115,6 +120,7 @@ npm ci --ignore-scripts
 npm test
 ```
 
+The verified suite contains **14 backend tests and 15 frontend tests**.
 The application itself has no Node build step. Tests cover owner/teammate
 flows, permission revocation, formatting persistence, imports, simultaneous
 saves, database isolation, durable responses, rendering, and autosave races.
@@ -138,10 +144,11 @@ See **DEPLOYMENT.md** for the exact deployment and verification steps.
 
 ## Submission
 
-No live URL or recording is claimed. Finish browser checks and deployment,
-record the walkthrough using `WALKTHROUGH.md`, and update `DEPLOYMENT_URL.txt`,
-`VIDEO_URL.txt`, and `SUBMISSION.md`. Put the source, notes, and video link in
-one Google Drive folder with reviewer access.
+The live application is deployed on Railway from this repository's `main`
+branch with persistent storage. See `VALIDATION.md` for completed checks.
+The remaining handoff is to record the walkthrough and assemble the Google
+Drive folder. Follow **NEXT_STEPS.md**, then replace the pending video and
+Drive links in `SUBMISSION.md`. The walkthrough is not recorded yet.
 
 ## References
 

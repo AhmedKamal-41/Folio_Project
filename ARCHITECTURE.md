@@ -20,7 +20,8 @@ Each request receives a connection. Its transaction commits before a success
 response is sent and rolls back on failure. SQLite WAL mode is enabled.
 
 All queries bind parameters. Document saves check the expected version and
-current access in the SQL update. Only the owner can manage sharing. Demo
+current access in the SQL update. Only the owner can manage sharing or delete
+a document; deletion also removes its sharing records. Demo
 identity is a selected user ID, not a production authentication boundary.
 
 ## Frontend
@@ -38,6 +39,14 @@ API calls have a 15-second timeout. Navigation waits for saves. HTTP 409
 keeps the unsaved draft and pauses retries; a Word (.docx) download, built
 client-side from the Quill Delta via the `docx` library, provides a way to
 keep the draft before reloading. The application does not merge changes live.
+Deleting the open document waits for any in-flight write and pauses the
+queued autosave, preventing a save request after that document is deleted.
+
+File imports accept UTF-8 text and Word documents. `python-docx` converts
+supported paragraph/run formatting into the same validated Delta structure.
+The original upload is not stored. Tables, images, and complex Word layouts
+are outside the editor's model. Export runs in the browser with the bundled
+`docx` library, so it does not need an external conversion service.
 
 ## Infrastructure
 
@@ -46,16 +55,19 @@ build or third-party service is required at runtime. The Dockerfile copies
 only runtime source and assets and uses `exec` for proper shutdown signals.
 Docker Compose and Railway use a persistent `/data` volume. SQLite requires
 this deployment to remain a single replica; it is not a distributed database.
+The repository's main branch is connected to Railway. The deployed Docker
+build, health check, and persistence after redeploy succeeded; live browser
+verification is documented in `VALIDATION.md`.
 
 ## Scope cuts and next work
 
-Real login, live merging, comments, history, DOCX import, and advanced sharing
+Real login, live merging, comments, history, and advanced sharing
 roles remain outside this product slice. Every share grants editor access.
-The Word (.docx) download protects conflict recovery and preserves formatting,
-but DOCX import is still out of scope.
+Word import/export preserves basic supported formatting rather than full
+Microsoft Word layout fidelity.
 
-Next: finish real-browser and deployed-persistence checks, record the video,
-then add recovery drafts and a conflict comparison UI. Proper authentication
+Next: record the video and assemble the submission, then add recovery drafts
+and a conflict comparison UI. Proper authentication
 and a managed database would come before using the app for sensitive team data.
 
 ## Design references
