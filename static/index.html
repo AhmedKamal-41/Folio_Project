@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Folio — A little room for your best work</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/vendor/quill.snow.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script defer src="/static/vendor/quill.js"></script>
+  <script defer src="/static/vendor/docx.js"></script>
+  <script type="module" src="/static/js/app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Folio home"><span class="brand-icon">f</span> folio<span class="brand-dot">.</span></a>
+    <p class="workspace-label">YOUR WORKSPACE</p>
+    <button id="new-document" class="primary wide">+ &nbsp; New document</button>
+    <button id="import-document" class="secondary wide">↑ &nbsp; Import file</button>
+    <p class="import-hint">.txt or .docx · 1 MB · 100k characters</p>
+    <input id="file-input" type="file" accept=".txt,.docx,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+    <label class="search"><span>⌕</span><input id="search" placeholder="Find a document…" aria-label="Find a document"></label>
+    <nav class="filters" aria-label="Filter documents">
+      <button data-filter="all" class="active">All files</button>
+      <button data-filter="owned">Owned</button>
+      <button data-filter="shared">Shared</button>
+    </nav>
+    <div class="list-heading"><span>DOCUMENTS</span><span id="document-count">0</span><button id="refresh-documents" aria-label="Refresh document list" title="Refresh document list">↻</button></div>
+    <div id="document-list" aria-label="Documents"></div>
+    <footer class="account">
+      <div class="avatar" id="avatar">AA</div>
+      <div class="account-info"><label for="user-select">Demo account</label><select id="user-select" aria-label="Demo account"></select></div>
+      <p>Switch accounts to try sharing. Demo identities are simulated.</p>
+    </footer>
+  </aside>
+  <main>
+    <header class="topbar"><span>Workspace <span class="slash">/</span> <strong id="breadcrumb">Your documents</strong></span><span class="workspace-badge">A SPACE TO THINK</span></header>
+    <section id="empty-state" class="empty-state">
+      <div class="empty-icon">✦</div><p class="eyebrow">GOOD IDEAS START HERE</p>
+      <h1>A little room for<br>your best work.</h1>
+      <p>Create a document, bring your notes,<br>and move things forward together.</p>
+      <button id="empty-create" class="primary">Create your first document &nbsp; →</button>
+      <div class="empty-features"><span>Rich text</span><span>Autosave</span><span>Simple sharing</span></div>
+    </section>
+    <section id="document-panel" hidden>
+      <div class="document-header">
+        <div class="title-area"><div class="eyebrow">DOCUMENT <span id="ownership" class="badge">Owned by you</span></div><input id="document-title" maxlength="120" aria-label="Document title" placeholder="Untitled document"></div>
+        <div class="document-actions"><button id="download-draft" class="secondary" title="Download the current draft as a Word (.docx) document">Download draft</button><button id="reload-document" class="secondary">Reload latest</button><button id="save-document" class="secondary">Save</button><button id="share-document" class="primary">Share ↗</button></div>
+      </div>
+      <div class="document-meta"><span id="owner-label"></span><span id="save-status" role="status">Saved</span></div>
+      <div id="conflict-banner" class="conflict" hidden>Your draft is kept here. Another user saved a newer version. Use “Download draft” to keep a Word copy before choosing “Reload latest”.</div>
+      <div class="editor-workspace">
+        <div id="toolbar" aria-label="Text formatting">
+          <span class="ql-formats"><select class="ql-header" aria-label="Text style"><option selected value="">Normal text</option><option value="1">Heading 1</option><option value="2">Heading 2</option><option value="3">Heading 3</option></select></span>
+          <span class="ql-formats"><button class="ql-bold" aria-label="Bold"></button><button class="ql-italic" aria-label="Italic"></button><button class="ql-underline" aria-label="Underline"></button></span>
+          <span class="ql-formats"><button class="ql-list" value="bullet" aria-label="Bulleted list"></button><button class="ql-list" value="ordered" aria-label="Numbered list"></button></span>
+          <span class="toolbar-note">MAKE SOMETHING GOOD</span>
+        </div>
+        <div class="paper"><div id="editor"></div></div>
+        <div class="editor-footer"><span id="word-count">0 words</span><span>Changes save automatically</span></div>
+      </div>
+    </section>
+    <div id="notice" role="alert" hidden></div>
+  </main>
+  <dialog id="share-dialog" aria-labelledby="share-heading">
+    <div class="dialog-heading"><h2 id="share-heading">Better, together.</h2><button id="close-share" class="icon-button" aria-label="Close sharing">×</button></div>
+    <p>Invite a teammate to edit this document.<br>Only the owner can manage access.</p>
+    <div class="invite"><select id="share-user" aria-label="Teammate to invite"></select><button id="grant-access" class="primary">Give access</button></div>
+    <h3>People with access</h3><div id="share-list"></div>
+    <p class="dialog-note">Shared editing is asynchronous. Conflicting saves are detected; live cursors and merging are out of scope.</p>
+  </dialog>
+</body>
+</html>
